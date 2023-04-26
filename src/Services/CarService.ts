@@ -26,7 +26,7 @@ class CarService {
     const result = await this.model.getCars();
 
     const cars = result.map((car) => this.createCarDomain(car));
-    
+
     return cars;
   }
 
@@ -38,6 +38,16 @@ class CarService {
     const car = this.createCarDomain(result.message as ICar);
 
     return { type: null, message: car };
+  }
+
+  public async update(id: string, car: ICar) {
+    const result = await this.model.update(id, car);
+    
+    if (result.type) return result;
+
+    const updatedCar = this.createCarDomain(result.message as ICar);
+
+    return { type: null, message: updatedCar };
   }
 }
 

@@ -4,6 +4,7 @@ import {
   model,
   models,
   isValidObjectId,
+  UpdateQuery,
 } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 
@@ -38,9 +39,24 @@ class CarODM {
     if (!isValidObjectId(id)) return { type: 422, message: { message: 'Invalid mongo id' } };
 
     const car = await this.model.findOne({ _id: id });
+
     if (!car) return { type: 404, message: { message: 'Car not found' } };
 
     return { type: null, message: car };
+  }
+
+  public async update(id: string, car: ICar) {
+    if (!isValidObjectId(id)) return { type: 422, message: { message: 'Invalid mongo id' } };
+
+    const updatedCar = await this.model.findByIdAndUpdate(
+      { _id: id },
+      { ...car } as UpdateQuery<ICar>,
+      { new: true },
+    );
+  
+    if (!updatedCar) return { type: 404, message: { message: 'Car not found' } };
+
+    return { type: null, message: updatedCar };
   }
 }
 

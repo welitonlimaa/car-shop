@@ -8,4 +8,14 @@ CarRoutes.post(
   (req, res, next) => new CarController(req, res, next).create(),
 );
 
+CarRoutes.get(
+  '/cars',
+  (req, res, next) => new CarController(req, res, next).getCars(),
+);
+
+CarRoutes.get(
+  '/cars/:id',
+  (req, res, next) => new CarController(req, res, next).getCarById(),
+);
+
 export default CarRoutes;

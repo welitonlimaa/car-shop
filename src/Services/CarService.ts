@@ -23,7 +23,7 @@ class CarService {
   }
 
   public async getCars() {
-    const result = await this.model.getCars();
+    const result = await this.model.getAll();
 
     const cars = result.map((car) => this.createCarDomain(car));
 
@@ -31,7 +31,7 @@ class CarService {
   }
 
   public async getCarById(id: string) {
-    const result = await this.model.getCarById(id);
+    const result = await this.model.getById(id);
 
     if (result.type) return result;
 
